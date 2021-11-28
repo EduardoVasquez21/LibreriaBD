@@ -317,13 +317,15 @@ INSERT INTO Venta VALUES(  '4SignACd','Vkaiido6 ','24/11/2021', 1,1,80.00);
 INSERT INTO Venta VALUES(  '4sanFr1 ','Vkaiido6 ','24/11/2021', 1,1,30.00);
 INSERT INTO Venta VALUES(  '20ldvs','Vkaiido6 ','24/11/2021', 1,1,88.00);
 INSERT INTO Venta VALUES(  'Nev4mre','K3V11N54 ','24/11/2021', 1,1,50.00);
+INSERT INTO Venta VALUES(  'AeecG76 ','K3V11N54 ','24/11/2021', 1,2,45.00);
+INSERT INTO Venta VALUES(  'Y0r0007  ','K3V11N54 ','24/11/2021', 1,3,56.00);
 
 SELECT * from Venta;
 
 ----Total venta---
-select sum(Precio_Unitario) as Total
+select sum(Cantidad_Libros * Precio_Unitario) as Total
 from Venta
-where CodigoCliente='Vkaiido6';
+where CodigoCliente='K3V11N54';
 
 -----Actualizar Cantidad---
 select (Titulo), (Cantidad) from Libro
@@ -332,6 +334,7 @@ where Codigo_Libro='Nev4mre';
 update Libro
 set Cantidad= 10
 where Codigo_Libro = 'Nev4mre';
+
 
 -----Prestamo---
 INSERT INTO Prestamo VALUES(  'EAVL0843','Nev4mre ','24/11/2021','30/11/2021', 'NO');
