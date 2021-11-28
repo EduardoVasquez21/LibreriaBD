@@ -322,18 +322,42 @@ INSERT INTO Venta VALUES(  'Y0r0007  ','K3V11N54 ','24/11/2021', 1,3,56.00);
 
 SELECT * from Venta;
 
-----Total venta---
+----procedimientos
+---Ventas
+create procedure VENTAS @CodigoCliente nvarchar(30)
+as
 select sum(Cantidad_Libros * Precio_Unitario) as Total
 from Venta
-where CodigoCliente='K3V11N54';
+where CodigoCliente=@CodigoCliente;
+-----Devoluciones
+create Procedure Devolucion @Lector nvarchar(30)
+as
+select * from Prestamo
+where CodigoLector=@Lector;
+----Existencias
+create procedure EXISTENCIAS @Codigo_Libro nvarchar(30)
+as
+select (Titulo), (Cantidad) from Libro
+where Codigo_Libro=@Codigo_Libro;
+----Disponibilidad
+create procedure Disponibilidad @Libro nvarchar(30)
+as
+select (Titulo), (Disponibilidad) from Libro
+where Codigo_Libro=@Libro;
+
+
+
+----Total venta---
+
+exec VENTAS @CodigoCliente='Vkaiido6';
 
 -----Actualizar Cantidad---
-select (Titulo), (Cantidad) from Libro
-where Codigo_Libro='Nev4mre';
+
+exec EXISTENCIAS @Codigo_Libro='FKM7am0';
 
 update Libro
-set Cantidad= 10
-where Codigo_Libro = 'Nev4mre';
+set Cantidad= 23
+where Codigo_Libro ='FKM7am0';
 
 
 -----Prestamo---
@@ -344,16 +368,16 @@ INSERT INTO Prestamo VALUES(  'EAVL0843','FKM7am0 ','24/11/2021','30/11/2021', '
 SELECT * from Prestamo;
 
 ------Devolucion de libro----
+
+exec Devolucion @Lector='EAVL0843';
+
 update Prestamo
 set Devuelto= 'SI'
 where Codigo_Libro = 'Nev4mre';
 
-select * from Prestamo;
-
 -----Actualizar Cantidad---
 
-select (Titulo), (Cantidad) from Libro
-where Codigo_Libro='FKM7am0';
+exec EXISTENCIAS @Codigo_Libro='FKM7am0';
 
 update Libro
 set Cantidad= 23
@@ -362,6 +386,7 @@ where Codigo_Libro = 'FKM7am0';
 select * from Libro where Codigo_Libro='FKM7am0';
 
 ----Actualizar Disponibilidad----
+exec Disponibilidad @Libro='FKM7am0';
 
 update Libro
 set Disponibilidad= 'Disponible'
