@@ -113,7 +113,7 @@ create table Venta(
 IdVenta int primary key identity,
 Codigo_Libro char(8),
 CodigoCliente char(8),
-FechaCompra date,
+FechaVenta date,
 IdFormadePago int,
 Cantidad_Libros int,
 Precio_Unitario money,
@@ -325,7 +325,7 @@ SELECT * from Venta;
 ----procedimientos
 ---Ventas
 create procedure VENTAS @CodigoCliente nvarchar(30)
-as
+as 
 select sum(Cantidad_Libros * Precio_Unitario) as Total
 from Venta
 where CodigoCliente=@CodigoCliente;
@@ -391,3 +391,22 @@ exec Disponibilidad @Libro='FKM7am0';
 update Libro
 set Disponibilidad= 'Disponible'
 where Codigo_Libro = 'FKM7am0';
+
+-------Join
+---inner----
+select Venta.CodigoCliente,	Cliente.NombreCliente,	Venta.FechaVenta
+from Venta
+inner join Cliente on Venta.CodigoCliente=Cliente.CodigoCliente; 
+
+---inner de tres tablas---
+
+select Venta.CodigoCliente, Cliente.NombreCliente, Libro.Titulo
+from ((Venta
+inner join Cliente on Venta.CodigoCliente = Cliente.CodigoCliente)
+inner join Libro on Venta.Codigo_Libro=Libro.Codigo_Libro);
+
+----Cuantos Autores hay de cada pais---
+select count (IdEscritor), Pais_Escritor
+from Escritor 
+group by Pais_Escritor;
+
