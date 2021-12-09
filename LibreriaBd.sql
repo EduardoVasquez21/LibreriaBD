@@ -11,17 +11,17 @@ Id_ProveedorEditorial int identity,
 CodigoEditorial char(8) primary key,
 Nombre_Editorial varchar(50)NOT NULL,
 Direccion_Editorial varchar (100) NOT NULL,
-TelefonoEditorial varchar (12)
+TelefonoEditorial varchar (12) NOT NULL
 );
 
 create table Lector(
 IdLector int  identity,
 CodigoLector char(8) primary key,
-Nombre_Lector varchar (25),
-Apellido_Lector varchar(25),
-Edad int check(Edad>=12),
-Direccion varchar(50),
-Telefono varchar (12)
+Nombre_Lector varchar (25) Not null,
+Apellido_Lector varchar(25)NOT NULL,
+Edad int check(Edad>=12) NOT NULL,
+Direccion varchar(50)NOT NULL,
+Telefono varchar (12)NOT NULL
 );
 
 
@@ -44,18 +44,18 @@ create table Escritor (
 IdEscritor int identity,
 Codigo_Escritor char(8) primary key,
 Nombre_Escritor varchar(50)NOT NULL,
-Apellido_Escritor varchar (50),
+Apellido_Escritor varchar (50) NOT NULL,
 Pais_Escritor varchar(50)NOT NULL,
 );
 
 create table DatosEscritor(
 IdDatosEscritor int primary key identity,
-Codigo_Escritor char(8),
-Fecha_Nacimiento date,
-Lugar_Nacimiento varchar (50),
-Fecha_Deceso date,
-Lugar_Deceso varchar (50),
-Biografia varchar (500)
+Codigo_Escritor char(8)NOT NULL,
+Fecha_Nacimiento date NOT NULL,
+Lugar_Nacimiento varchar (50)NOT NULL,
+Fecha_Deceso date NOT NULL,
+Lugar_Deceso varchar (50) NOT NULL,
+Biografia varchar (500) NOT NULL
 
 FOREIGN KEY (Codigo_Escritor) REFERENCES Escritor(Codigo_Escritor)
 );
@@ -63,17 +63,17 @@ FOREIGN KEY (Codigo_Escritor) REFERENCES Escritor(Codigo_Escritor)
 create table Libro (
 Id_Libros int identity,
 Codigo_Libro char(8) primary key,
-CodigoEditorial char(8),
+CodigoEditorial char(8) NOT NULL,
 Titulo varchar(100)NOT NULL,
-Codigo_Escritor char(8),
-Año_Publicacion varchar(12),
-Categoria char(20),
-Genero_Literario char (20),
-Subgenero char(20),
-Reseña varchar (700),
-Precio money,
-Cantidad int,
-Disponibilidad varchar (30)
+Codigo_Escritor char(8) NOT NULL,
+Año_Publicacion varchar(12) NOT NULL,
+Categoria char(20) NOT NULL,
+Genero_Literario char (20) NOT NULL,
+Subgenero char(20) NOT NULL,
+Reseña varchar (700) NOT NULL,
+Precio money NOT NULL,
+Cantidad int NOT NULL,
+Disponibilidad varchar (30)NOT NULL
 
 FOREIGN KEY (CodigoEditorial) REFERENCES Proveedores(CodigoEditorial),
 FOREIGN KEY (Categoria) REFERENCES Categoria(Categoria),
@@ -86,7 +86,7 @@ create table EstadoLibros(
 IdEstado int primary key identity,
 Codigo_Libro char(8) not null,
 Estado varchar (20) not null,
-Descripcion varchar (200),
+Descripcion varchar (200) NOT NULL,
 
 FOREIGN KEY (Codigo_Libro) REFERENCES Libro(Codigo_Libro)
 );
@@ -98,25 +98,25 @@ CodigoCliente char(8)primary key,
 NombreCliente varchar (30)not null,
 ApellidoCliente varchar(30)not null,
 Edad int check(Edad>=12)not null,
-Direccion varchar(50),
-Telefono varchar (12)
+Direccion varchar(50) NOT NULL,
+Telefono varchar (12) NOT NULL
 );
 
 create table FormaDePago(
 IdFormadePago int primary key identity,
-Pago varchar (15)
+Pago varchar (15) NOT NULL
 );
 
 drop table Venta;
 
 create table Venta(
 IdVenta int primary key identity,
-Codigo_Libro char(8),
-CodigoCliente char(8),
-FechaVenta date,
-IdFormadePago int,
-Cantidad_Libros int,
-Precio_Unitario money,
+Codigo_Libro char(8) NOT NULL,
+CodigoCliente char(8) NOT NULL,
+FechaVenta date NOT NULL,
+IdFormadePago int NOT NULL,
+Cantidad_Libros int NOT NULL,
+Precio_Unitario money NOT NULL,
 FOREIGN KEY (Codigo_Libro) REFERENCES Libro(Codigo_Libro),
 FOREIGN KEY (CodigoCliente) REFERENCES Cliente(CodigoCliente),
 FOREIGN KEY (IdFormadePago) REFERENCES FormaDePago(IdFormadePago)
@@ -126,10 +126,10 @@ FOREIGN KEY (IdFormadePago) REFERENCES FormaDePago(IdFormadePago)
 
 create table Prestamo (
 IdPrestamo int primary key identity,
-CodigoLector char(8),
-Codigo_Libro char(8),
-FechaPrestamo date,
-FechaDevolucion date,
+CodigoLector char(8) NOT NULL,
+Codigo_Libro char(8) NOT NULL,
+FechaPrestamo date NOT NULL,
+FechaDevolucion date NOT NULL,
 Devuelto varchar (2) default 'No'
 
 FOREIGN KEY (CodigoLector) REFERENCES Lector(CodigoLector),
